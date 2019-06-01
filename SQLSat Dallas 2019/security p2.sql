@@ -12,7 +12,7 @@ exec dbo.DenyTablesproc
 go
 exec dbo.DenyTablesproc_adhoc
 go
-select * from dbo.DenyFunc ()
+select * from dbo.DenyFunc()
 
 /*
 

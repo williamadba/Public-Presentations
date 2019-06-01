@@ -17,28 +17,28 @@ drop function if exists dbo.DenyFunc
 
 
 */
-use master
-go
+USE [master]
+GO
 CREATE LOGIN [DenyPrincipal] WITH PASSWORD=N'deny', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
 GO
 GRANT CONNECT SQL TO [DenyPrincipal]
 ALTER LOGIN [DenyPrincipal] ENABLE
 GO
-use securitydemo
-go
+USE securitydemo
+GO
 CREATE USER [DenyPrincipal] FOR LOGIN [DenyPrincipal]
 GO
 
 
 
-create table dbo.DenyTable (
-id int identity(1,1) not null primary key,
-text1 varchar(100)
+CREATE TABLE dbo.DenyTable (
+id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+text1 VARCHAR(100)
 )
-go
-insert into DenyTable (text1) values ('test')
-go 3
-go
+GO
+INSERT INTO DenyTable (text1) VALUES ('test')
+GO 3
+GO
 
 create view dbo.DenyTableview with schemabinding as
 select selectview = text1 from dbo.DenyTable 
