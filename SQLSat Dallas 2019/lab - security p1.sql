@@ -87,3 +87,4 @@ AS RETURN
 	FROM dbo.DenyTable;
 GO
 GRANT SELECT ON dbo.DenyFunc TO [DenyPrincipal];
+
