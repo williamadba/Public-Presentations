@@ -3,13 +3,14 @@
  --- Upgrade or Migrate the database to new hardware, new platform
  --- Change tier of Azure SQL DB 
  --- Re-image an Azure VM with ephemeral OS 
+ --- Docker run without explicit MAC
  --- Since the C++ function UuidCreateSequential is based on "the MAC address of a machine's Ethernet card", changing or replacing the NIC may trigger,
  ---  or anything that changes the NIC MAC may trigger.
  ------ You cannot specify the MAC address of a new Azure network interface to prevent this on a new machine!
  ------ more info: https://docs.microsoft.com/en-us/windows/win32/api/rpcdce/nf-rpcdce-uuidcreatesequential?redirectedfrom=MSDN
  ------ "Therefore you should never use this UUID to identify an object that is not strictly local to your computer."
 
-/*
+
 use master
 go
 CREATE DATABASE [make_ints_not_guids]
@@ -28,11 +29,10 @@ go
 CREATE TABLE dbo.nonsequentialguid
 (id uniqueidentifier NOT NULL CONSTRAINT DF_nonseq_id DEFAULT newsequentialid()
 , whenobserved datetimeoffset(2) NOT NULL CONSTRAINT DF_nonseq_when DEFAULT sysdatetimeoffset() 
-, constraint pk_nonseq primary key (id) WITH (OPTIMIZE_FOR_SEQUENTIAL_KEY = on) --SQL 2019+ only
+, constraint pk_nonseq primary key (id) WITH (OPTIMIZE_FOR_SEQUENTIAL_KEY = ON) --SQL 2019+ only
 ) 
 go
 
-*/
 
 --Run the below command after reboots, failovers, etc. You will eventually start writing nonsequential "sequential" guids.
 insert into dbo.nonsequentialguid (whatever) values ('a')
