@@ -1,3 +1,5 @@
+use w
+go
 drop table if exists dbo.floatinghorror;
 drop table if exists dbo.migrated_table;
 go
@@ -24,14 +26,15 @@ insert into dbo.floatinghorror (invoiceid, whatever)
 values (2019000000100.008, char(33));
 
 GO
+--weird, shows duplicate values, but aggregates correctly?!
+select invoiceid from dbo.floatinghorror group by invoiceid 
 
-select invoiceid from dbo.floatinghorror --weird
-select invoiceid from dbo.floatinghorror group by invoiceid --more weird, aggregates correctly?!
-select invoiceid, count(1) from dbo.floatinghorror group by invoiceid --still weird, aggregates correctly?!
-select cast(invoiceid as decimal(19,3)), count(1) from dbo.floatinghorror group by invoiceid --to actually display the data, gotta convert
+--to actually display the data, gotta convert
+select cast(invoiceid as decimal(19,3)), count(1) from dbo.floatinghorror group by invoiceid 
 GO
 
---Say we have to migrate the data to another system, like a data warehouse or a competitor's software, 
+--Say we have to copy the data to another system,
+--like a data warehouse or a competitor's software, 
 --to a database that uses grown-up data types
 --and they have higher precision requirements!
 create table dbo.migrated_table
