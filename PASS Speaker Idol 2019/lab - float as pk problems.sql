@@ -26,12 +26,12 @@ insert into dbo.floatinghorror (invoiceid, whatever)
 values (2019000000100.008, char(33));
 
 GO
---weird, shows duplicate values, but aggregates correctly?!
-select invoiceid from dbo.floatinghorror group by invoiceid 
+--weird, shows duplicate values despite a group by?!
+select invoiceid from dbo.floatinghorror group by invoiceid;
 
 --to actually display the data, gotta convert
-select cast(invoiceid as decimal(19,3)), count(1) from dbo.floatinghorror group by invoiceid 
-GO
+select invoice = cast(invoiceid as decimal(19,3))
+from dbo.floatinghorror group by invoiceid;
 
 --Say we have to copy the data to another system,
 --like a data warehouse or a competitor's software, 
@@ -40,14 +40,10 @@ GO
 create table dbo.migrated_table
 (invoiceid decimal(19,4) not null constraint PK_migrated_table primary key
 , whatever varchar(10) not null
-)
+);
 --the data inserts fine
 insert into dbo.migrated_table (invoiceid, whatever)
-select invoiceid, whatever from dbo.floatinghorror 
+select invoiceid, whatever from dbo.floatinghorror;
 GO
 --but oh no!
-select * from dbo.migrated_table
-
-
-
-
+select * from dbo.migrated_table;
