@@ -26,6 +26,14 @@ select invoiceid from dbo.floatinghorror group by invoiceid;
 select invoice = cast(invoiceid as decimal(19,3))
 from dbo.floatinghorror group by invoiceid;
 
+
+
+
+
+
+
+
+
 --Say we have to copy the data to another system,
 --like a data warehouse or a competitor's software, 
 --to a database that uses grown-up data types
