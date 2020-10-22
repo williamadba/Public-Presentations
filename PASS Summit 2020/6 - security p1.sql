@@ -1,9 +1,6 @@
 /*
 --connect to your sample SQL Server, database summit2020. This script is designed for Azure SQL DB or SQL Server partially contained databases.
 
-if exists (select * from sys.server_principals where name = 'DenyPrincipal') 
-DROP LOGIN [DenyPrincipal] 
-go
 if exists (select * from sys.database_principals where name = 'DenyPrincipal') 
 DROP USER [DenyPrincipal]
 drop view if exists dbo.DenyTableview 
@@ -11,7 +8,6 @@ drop table if exists  dbo.DenyTable
 drop proc if exists dbo.DenyTablesproc
 drop proc if exists dbo.DenyTablesproc_adhoc
 drop function if exists dbo.DenyFunc
-
 
 */
  
